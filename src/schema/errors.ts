@@ -20,10 +20,6 @@ export class ValidationError extends TypeError {
     super(message);
 
     this.errors = errors;
-
-    // Extending error in TypeScript:
-    // https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
-    Object.setPrototypeOf(this, ValidationError.prototype);
   }
 
   public toJSON?(): Record<string, unknown> {
@@ -36,6 +32,7 @@ export class ValidationError extends TypeError {
     };
   }
 }
+
 
 ValidationError.prototype.name = 'ValidationError';
 

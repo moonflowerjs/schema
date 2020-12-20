@@ -8,6 +8,7 @@ describe("schema", () => {
 
         expect(err).toBeInstanceOf(Error);
         expect(err).toBeInstanceOf(TypeError);
+        expect(err).toBeInstanceOf(ValidationError);
       });
 
       it("should have error properties", () => {
