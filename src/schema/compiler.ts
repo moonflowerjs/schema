@@ -101,7 +101,7 @@ export default function compiler<S>(
   if (strict) {
     const keysSet = new Set(keys);
 
-    tasks.push((res, errors, obj): void => {
+    tasks.push((_, errors, obj): void => {
       Object.keys(obj).forEach((key) => {
         if (keysSet.has(key)) return;
 
