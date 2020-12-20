@@ -3,7 +3,7 @@ import FunctionType, { FunctionParameters } from "./FunctionType";
 
 
 // take only values key original object that 
-// 1) extends From function and have no params
+// 1) extends From function and have no params - () => any
 // or
 // 2) have optional sign - ?. 
 // 
@@ -24,6 +24,8 @@ type SchemaOptionalKeys<S> = Exclude<
   undefined
 >;
 
+
+// required keys is All keys set subtracting Optional keys set 
 type SchemaRequiredKeys<S> = Exclude<keyof S, SchemaOptionalKeys<S>>;
 
 type SchemaKeysObject<S> = {
