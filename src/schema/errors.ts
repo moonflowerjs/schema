@@ -1,5 +1,5 @@
-import { FunctionParameters } from './FunctionType';
-import { ObjectProperty } from './utils';
+import { FunctionParameters } from "./FunctionType";
+import { ObjectProperty } from "./utils";
 
 export type ErrorLikeEntity<P extends FunctionParameters = never> =
   | string
@@ -33,18 +33,17 @@ export class ValidationError extends TypeError {
   }
 }
 
-
-ValidationError.prototype.name = 'ValidationError';
+ValidationError.prototype.name = "ValidationError";
 
 export function toError<P extends FunctionParameters>(
   error: ErrorLikeEntity<P>,
   ...args: P
 ): ValidationError {
-  if (typeof error === 'string') {
+  if (typeof error === "string") {
     return new ValidationError(error);
   }
 
-  if (typeof error === 'function') {
+  if (typeof error === "function") {
     return toError(error(...args));
   }
 
@@ -61,9 +60,9 @@ export function createValidationError<P extends FunctionParameters>(
       const { path, error: err } = errors[0];
       const message = String((err && err.message) || err);
 
-      error = path ? `${path.join('.')}: ${message}` : message;
+      error = path ? `${path.join(".")}: ${message}` : message;
     } else {
-      error = 'Unknown Validation Error';
+      error = "Unknown Validation Error";
     }
   }
 

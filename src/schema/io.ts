@@ -1,7 +1,16 @@
-import { IsAsync, Primitive, ResolvedValue } from './utils';
+import { IsAsync, Primitive, ResolvedValue } from "./utils";
 import FunctionType, { FunctionParameters } from "./FunctionType";
 
 
+// take only values key original object that 
+// 1) extends From function and have no params
+// or
+// 2) have optional sign - ?. 
+// 
+// Kek = {kek?: number}
+//  type Lol = keyof Kek
+//  type check = [undefined] extends [Kek[Lol]] ? true : false 
+// because [undefined] extends [undefined | number] will be true
 type SchemaOptionalKeys<S> = Exclude<
   {
     [K in keyof S]: [S[K]] extends [FunctionType]
@@ -14,7 +23,6 @@ type SchemaOptionalKeys<S> = Exclude<
   }[keyof S],
   undefined
 >;
-
 
 type SchemaRequiredKeys<S> = Exclude<keyof S, SchemaOptionalKeys<S>>;
 
@@ -35,7 +43,7 @@ export type SchemaParameters<S> = [S] extends [FunctionType]
   ? [
       {
         [K in keyof S]: SchemaParameters<S[K]>[0];
-      },
+      }
     ]
   : [S] extends [object] // eslint-disable-line @typescript-eslint/ban-types
   ? [{ [K in keyof SchemaKeysObject<S>]: SchemaParameters<S[K]>[0] }]
@@ -56,7 +64,6 @@ export type SchemaResolveType<S> = S extends FunctionType
   : unknown extends S
   ? unknown
   : never;
-
 
 type IsSchemaAsync<S> = S extends FunctionType
   ? IsAsync<ReturnType<S>>
@@ -81,7 +88,7 @@ export type SchemaValidatorFunction<S> = FunctionType<
 >;
 
 export type MergeSchemaParameters<P extends FunctionParameters> = [P] extends [
-  never,
+  never
 ]
   ? [never]
   : [P] extends [[]]
@@ -91,3 +98,6 @@ export type MergeSchemaParameters<P extends FunctionParameters> = [P] extends [
   : [P] extends [[unknown?]]
   ? [P[0]?]
   : P;
+
+
+  type Kek = SchemaParameters<{kek: 1, lel?: 2, lol: 'kek', mam:{da?: 1}}>
