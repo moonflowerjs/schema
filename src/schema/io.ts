@@ -98,6 +98,3 @@ export type MergeSchemaParameters<P extends FunctionParameters> = [P] extends [
   : [P] extends [[unknown?]]
   ? [P[0]?]
   : P;
-
-
-  type Kek = SchemaParameters<{kek: 1, lel?: 2, lol: 'kek', mam:{da?: 1}}>
